@@ -5,28 +5,51 @@ from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
 # Get data from excel sheet for inputs.
-try:
-    getdata = pandas.read_excel('/Users/joeybanowetz/Desktop/Joule Calculations.xlsx', usecols='A')
-except FileNotFoundError:
-    Path = input ('File not found, Please enter path name here:')
-    getdata = pandas.read_excel(Path, usecols='A') 
+#try:
+#    getdata = pandas.read_excel('/Users/joeybanowetz/Desktop/Joule Calculations.xlsx', usecols='A')
+#except FileNotFoundError:
+#    Path = input ('File not found, Please enter path name here:')
+#    getdata = pandas.read_excel(Path, usecols='A') 
 
 # Drag coefficient, projectile radius (m), area (m2) and mass (kg).
-c = getdata.iloc[0]
-r = getdata.iloc[1]
+#c = getdata.iloc[0]
+#r = getdata.iloc[1]
+#A = np.pi * r**2
+#m = getdata.iloc[2]
+# # Air density (kg.m-3), acceleration due to gravity (m.s-2).
+#rho_air = getdata.iloc[3]
+# Initial speed and launch angle (from the horizontal).
+#v0 = getdata.iloc[4]
+#phi0 = np.radians(getdata.iloc[5])
+
+
+
+
+#Get all input for variables
+
+#drag coefficient
+c = float(input("enter drag coefficient: "))
+#projectile radius
+r = float(input("enter projectile radius (m): "))
+#area
 A = np.pi * r**2
-m = getdata.iloc[2]
-
-# Air density (kg.m-3), acceleration due to gravity (m.s-2).
-rho_air = getdata.iloc[3]
+#mass
+m = float(input("enter mass of object (kg): "))
+#gravity constant
 g = 9.81
-
+#air density
+rho_air = float(input("enter air density value (kg/m^3): "))
 # For convenience, define  this constant.
 k = 0.5 * c * rho_air * A
+#inital speed
+v0 = float(input("enter initial speed (m/s): "))
+#launch angle
+phi0 = np.radians(float(input("enter launch angle (degree): ")))
 
-# Initial speed and launch angle (from the horizontal).
-v0 = getdata.iloc[4]
-phi0 = np.radians(getdata.iloc[5])
+
+
+
+
 
 def deriv(t, u):
     x, xdot, z, zdot = u
@@ -53,7 +76,7 @@ hit_target.direction = -1
 
 # Solve!
 soln = solve_ivp(deriv, (t0, tf), u0, dense_output=True,
-                 events=(hit_target))
+                events=(hit_target))
 
 print('Time to target: {:.2f}s'.format(soln.t_events[0][0]))
 
